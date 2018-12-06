@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>鼠标悬浮弹出</title>
+    <script src="JS/jquery-1.4.4.min.js"></script>
+    <style>
+        html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background: url("./img/BG.png") no-repeat center center;
+            background-size: contain;
+        }
+
+        .model {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            position: fixed;
+            display: none;
+            z-index: 98;
+
+        }
+
+        .model-close {
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            z-index: 999;
+            cursor: pointer;
+        }
+
+        .Popup {
+            padding-top: 20px;
+            width: 500px;
+            height: 450px;
+            border-radius: 5%;
+            background-color: #F0F0F0;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        .PopupTop {
+            width: 400px;
+            height: 50px;
+            background-color: #84AF9B;
+            margin: 0 auto;
+            border: 1px solid #2C3E50;
+            cursor: pointer;
+
+        }
+
+        .PopupTopPiName {
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            line-height: 50px;
+            color: #ffffff;
+            border-right: 1px solid #2C3E50;
+            box-sizing: border-box;
+        }
+
+        .PopupTopCName {
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            line-height: 50px;
+            color: #ffffff;
+            border-right: 1px solid #2C3E50;
+            box-sizing: border-box;
+        }
+
+        .PopupTopNowValue {
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            line-height: 50px;
+            color: #ffffff;
+            box-sizing: border-box;
+        }
+
+        .PopupBottom {
+            width: 402px;
+            height: 380px;
+            margin: 0 auto;
+            cursor: pointer;
+            overflow-y: auto;
+
+        }
+
+        .PopupBottomTemplate {
+            width: 400px;
+            height: 50px;
+            border: 1px solid #2C3E50;
+        }
+
+        .TemplatePiName {
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            line-height: 50px;
+            border-right: 1px solid #2C3E50;
+            box-sizing: border-box;
+            font-size: 12px;
+            overflow: hidden;
+        }
+
+        .TemplateCName {
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            line-height: 50px;
+            border-right: 1px solid #2C3E50;
+            box-sizing: border-box;
+            font-size: 12px;
+            overflow: hidden;
+        }
+
+        .TemplateNowValue {
+            width: 33.2%;
+            float: left;
+            text-align: center;
+            line-height: 50px;
+            box-sizing: border-box;
+        }
+
+        .BoosterRegulatorStation {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0);
+            z-index: 99;
+            left: 30%;
+            top: 12%;
+        }
+
+        .NumberOneGasFiredBoiler {
+            position: absolute;
+            width: 30px;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0);
+            z-index: 99;
+            left: 50%;
+            top: 15%;
+
+        }
+
+        .NumberTwoGasFiredBoiler {
+            position: absolute;
+            width: 30px;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0);
+            z-index: 99;
+            left: 59%;
+            top: 15%;
+        }
+
+        .GasTurbine {
+            position: absolute;
+            width: 60px;
+            height: 300px;
+            background-color: rgba(0, 0, 0, 0);
+            z-index: 99;
+            right: 22%;
+            bottom: 35%;
+
+        }
+
+        .ComplexBuilding {
+            position: absolute;
+            width: 350px;
+            height: 260px;
+            background-color: rgba(0, 0, 0, 0);
+            z-index: 99;
+            left: 27%;
+            bottom: 22%;
+        }
+    </style>
+</head>
+<body>
+<div class="BoosterRegulatorStation" id="BoosterRegulatorStation"></div>
+<div class="NumberOneGasFiredBoiler" id="NumberOneGasFiredBoiler"></div>
+<div class="NumberTwoGasFiredBoiler" id="NumberTwoGasFiredBoiler"></div>
+<div class="GasTurbine" id="GasTurbine"></div>
+<div class="ComplexBuilding" id="ComplexBuilding"></div>
+<div class="model" id="model">
+    <div class="Popup" id="Popup">
+        <div class="model-close">
+            <img src="./img/close.png" alt="">
+        </div>
+        <div class="PopupTop">
+            <div class="PopupTopPiName">PI点值</div>
+            <div class="PopupTopCName">PI点中文值</div>
+            <div class="PopupTopNowValue">当前值</div>
+        </div>
+        <div class="PopupBottom" id="PopupBottom">
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $("#BoosterRegulatorStation").click(function () {
+        var id = "BoosterRegulatorStation";
+        $("#model").show("slow");
+        GetPiInfo(id);
+    });
+
+    $("#NumberOneGasFiredBoiler").click(function () {
+        var id = "NumberOneGasFiredBoiler";
+        $("#model").show("slow");
+        GetPiInfo(id);
+    });
+
+    $("#NumberTwoGasFiredBoiler").click(function () {
+        var id = "NumberTwoGasFiredBoiler";
+        $("#model").show("slow");
+        GetPiInfo(id);
+    });
+
+    $("#GasTurbine").click(function () {
+        var id = "GasTurbine";
+        $("#model").show("slow");
+        GetPiInfo(id);
+    });
+
+    $("#ComplexBuilding").click(function () {
+        var id = "ComplexBuilding";
+        $("#model").show("slow");
+        GetPiInfo(id);
+    });
+
+
+    $(".model-close").click(function () {
+        $("#model").hide("slow")
+    });
+
+    function GetPiInfo(id) {
+        jQuery.ajax({
+            type: 'get',
+            url: 'GetPiInfo',
+            data: {"id": id},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: 'json',
+            success: function (data) {
+                $("#PopupBottom").empty();
+                $(data).each(function (i, e) {
+                    $("#PopupBottom").append("<div class=\"PopupBottomTemplate\">\n" +
+                        "                <div class=\"TemplatePiName\">" + e.Tag + "</div>\n" +
+                        "                <div class=\"TemplateCName\">" + e.TagName + "</div>\n" +
+                        "                <div class=\"TemplateNowValue\">" + e.NowValue + "</div>\n" +
+                        "            </div>")
+                })
+            },
+        });
+    }
+
+
+</script>
+</body>
+</html>
